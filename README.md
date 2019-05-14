@@ -66,41 +66,12 @@ Implement a function to perform Dijkstra's algorithm. The function should take i
 
 
 ```python
-def dijkstra(G, u, v, return_plots=False):
+def dijkstra(G, u, v):
     #Your code here
     """G is the graph in question.
     u is the starting node
     v is the destination node
-    
-    Future: add weighting option
     """
-    visited = set()
-    unvisited = set(G.nodes)
-    distances = {u:0}
-    for node in unvisited:
-        if node == u:
-            continue
-        else:
-            distances[node] = np.inf
-    cur_node = u
-    weight = 1 #set default weight for non-weighted graphs
-    while len(unvisited)>0:
-        if cur_node == v:
-            break
-        if min([distances[node] for node in unvisited]) == np.inf:
-            print("There is no path between u and v.")
-            return np.nan
-        #Pull up neighbors
-        neighbors = G[cur_node]
-        for node in neighbors:
-            #Future update:Add weight update for weighted graphs
-            #Set either the distance through the current node or a previous shorter path
-            distances[node] = min(distances[cur_node] + weight, distances[node])
-        #Mark current node as visited
-        visited.add(cur_node)
-        unvisited.remove(cur_node)
-        cur_node = sorted([(node, distances[node]) for node in unvisited], key=lambda x:x[1])[0][0] #Set the node with the minimum distance as the current node
-    return distances[v]
 ```
 
 Test out your function on a couple of node pairs, and compare the output to that of NetworkX's built in implementation to verify your results.
@@ -108,28 +79,12 @@ Test out your function on a couple of node pairs, and compare the output to that
 
 ```python
 #Test your function here
-dijkstra(G, "F", "G")
 ```
-
-
-
-
-    2
-
-
 
 
 ```python
 #Compare to NetworkX's built in method
-nx.dijkstra_path_length(G, "F", "G")
 ```
-
-
-
-
-    2
-
-
 
 ## Coding Dijkstra's Algorithm Part 2
 
@@ -153,42 +108,7 @@ def dijkstra(G, u, v, return_path_directions=True):
     """G is the graph in question.
     u is the starting node
     v is the destination node
-    
-    Returns path, distance
     """
-    visited = set()
-    unvisited = set(G.nodes)
-    distances = {u:0}
-    shortest_paths = {u:[u]}
-    for node in unvisited:
-        if node == u:
-            continue
-        else:
-            distances[node] = np.inf
-    cur_node = u
-    weight = 1 #set default weight for non-weighted graphs
-    while len(unvisited)>0:
-        if cur_node == v:
-            break
-        if min([distances[node] for node in unvisited]) == np.inf:
-            print("There is no path between u and v.")
-            return np.nan
-        #Pull up neighbors
-        neighbors = G[cur_node]
-        for node in neighbors:
-            #Future update:Add weight update for weighted graphs
-            #Set either the distance through the current node or a previous shorter path
-            if distances[cur_node] + weight < distances[node]:
-                distances[node] = distances[cur_node] + weight
-                shortest_paths[node] = shortest_paths[cur_node] + [node]
-        #Mark current node as visited
-        visited.add(cur_node)
-        unvisited.remove(cur_node)
-        cur_node = sorted([(node, distances[node]) for node in unvisited], key=lambda x:x[1])[0][0] #Set the node with the minimum distance as the current node
-    if return_path_directions:
-        return shortest_paths[v], distances[v]
-    else:
-        return distances[v]
 ```
 
 Now check your updated function against the built in methods from NetworkX again.
@@ -196,17 +116,7 @@ Now check your updated function against the built in methods from NetworkX again
 
 ```python
 #Your code here
-print(dijkstra(G, "F", "G"), nx.dijkstra_path(G, "F", "G"), nx.dijkstra_path_length(G, "F", "G"))
-print('\n\n')
-print(dijkstra(G, "I", "A"), nx.dijkstra_path(G, "I", "A"), nx.dijkstra_path_length(G, "I", "A"))
 ```
-
-    (['F', 'I', 'G'], 2) ['F', 'I', 'G'] 2
-    
-    
-    
-    (['I', 'G', 'B', 'A'], 3) ['I', 'G', 'C', 'A'] 3
-
 
 ## Level-Up: Creating a Visual
 
@@ -232,83 +142,6 @@ def dijkstra(G, u, v, return_path_directions=True, show_plots=True):
     
     Returns path, distance
     """
-    if show_plots:
-        return_path_directions = True #must have path directions to generate plots
-    visited = set()
-    visited_edges = []
-    unvisited = set(G.nodes)
-    distances = {u:0}
-    shortest_paths = {u:[u]}
-    for node in unvisited:
-        if node == u:
-            continue
-        else:
-            distances[node] = np.inf
-    cur_node = u
-    weight = 1 #set default weight for non-weighted graphs
-    #Create the initial plot
-    if show_plots:
-        fig = plt.figure(figsize=(20,15))
-        ax = fig.add_subplot(561)
-        nx.draw(G, pos=nx.random_layout(G, random_state=9), with_labels=True, node_color="#1cf0c7",
-                node_size=500, font_weight="bold", width=2, alpha=.8, ax=ax)
-        ax.set_title('Step 1')
-        plot_n = 2
-    while len(unvisited)>0:
-        if cur_node == v:
-            break
-        if min([distances[node] for node in unvisited]) == np.inf:
-            print("There is no path between u and v.")
-            return np.nan
-        #Pull up neighbors
-        neighbors = G[cur_node]
-        for node in neighbors:
-            #Future update:Add weight update for weighted graphs
-            #Create a new graph of the neighbor being explored
-            if show_plots:
-                ax = fig.add_subplot(5,6,plot_n)
-                #Base Plot
-                nx.draw(G, pos=nx.random_layout(G, random_state=9), with_labels=True, node_color="#1cf0c7",
-                        node_size=500, font_weight="bold", width=2, alpha=.8, ax=ax)
-                #Recolor paths to visited nodeds
-                nx.draw_networkx_edges(G, edgelist=visited_edges, pos=nx.random_layout(G, random_state=9),
-                       width=3, edge_color="#00b3e6", ax=ax);
-                #Recolor current path
-                nx.draw_networkx_edges(G, edgelist=[(cur_node, node)], pos=nx.random_layout(G, random_state=9),
-                       width=3, edge_color="#ffd43d", ax=ax);
-                ax.set_title('Step {}'.format(plot_n))
-                plot_n += 1
-            #Set either the distance through the current node or a previous shorter path
-            if distances[cur_node] + weight < distances[node]:
-                distances[node] = distances[cur_node] + weight
-                shortest_paths[node] = shortest_paths[cur_node] + [node]
-        #Mark current node as visited
-        visited.add(cur_node)
-        unvisited.remove(cur_node)
-        try:
-            #Will error for initial node
-            visited_edges.append((shortest_paths[cur_node][-2],cur_node))
-        except:
-            pass
-        #Update the plot for the visited node
-        if show_plots:
-            ax = fig.add_subplot(5,6,plot_n)
-            #Base Plot
-            nx.draw(G, pos=nx.random_layout(G, random_state=9), with_labels=True, node_color="#1cf0c7",
-                    node_size=500, font_weight="bold", width=2, alpha=.8, ax=ax)
-            #Recolor paths to visited nodeds
-            nx.draw_networkx_edges(G, edgelist=visited_edges, pos=nx.random_layout(G, random_state=9),
-                       width=3, edge_color="#00b3e6", ax=ax);
-            ax.set_title('Step {}'.format(plot_n))
-            plot_n += 1
-            if plot_n >= 29:
-                plt.show()
-                return None
-        cur_node = sorted([(node, distances[node]) for node in unvisited], key=lambda x:x[1])[0][0] #Set the node with the minimum distance as the current node
-    if return_path_directions:
-        return shortest_paths[v], distances[v]
-    else:
-        return distances[v]
 ```
 
 
