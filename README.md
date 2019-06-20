@@ -31,7 +31,7 @@ To start, here's the network from the previous lesson:
 ```python
 G = nx.navigable_small_world_graph(3, seed=3)
 G = nx.relabel_nodes(G, dict(zip(G.nodes, ["A", "B", "C", "D", "E", "F", "G", "H", "I"])))
-nx.draw(G, pos=nx.random_layout(G, random_state=9), with_labels=True, node_color="#1cf0c7",
+nx.draw(G, pos=nx.random_layout(G, seed=9), with_labels=True, node_color="#1cf0c7",
         node_size=500, font_weight="bold", width=2, alpha=.8)
 ```
 
@@ -250,7 +250,7 @@ def dijkstra(G, u, v, return_path_directions=True, show_plots=True):
     if show_plots:
         fig = plt.figure(figsize=(20,15))
         ax = fig.add_subplot(561)
-        nx.draw(G, pos=nx.random_layout(G, random_state=9), with_labels=True, node_color="#1cf0c7",
+        nx.draw(G, pos=nx.random_layout(G, seed=9), with_labels=True, node_color="#1cf0c7",
                 node_size=500, font_weight="bold", width=2, alpha=.8, ax=ax)
         ax.set_title('Step 1')
         plot_n = 2
@@ -268,13 +268,13 @@ def dijkstra(G, u, v, return_path_directions=True, show_plots=True):
             if show_plots:
                 ax = fig.add_subplot(5,6,plot_n)
                 #Base Plot
-                nx.draw(G, pos=nx.random_layout(G, random_state=9), with_labels=True, node_color="#1cf0c7",
+                nx.draw(G, pos=nx.random_layout(G, seed=9), with_labels=True, node_color="#1cf0c7",
                         node_size=500, font_weight="bold", width=2, alpha=.8, ax=ax)
                 #Recolor paths to visited nodeds
-                nx.draw_networkx_edges(G, edgelist=visited_edges, pos=nx.random_layout(G, random_state=9),
+                nx.draw_networkx_edges(G, edgelist=visited_edges, pos=nx.random_layout(G, seed=9),
                        width=3, edge_color="#00b3e6", ax=ax);
                 #Recolor current path
-                nx.draw_networkx_edges(G, edgelist=[(cur_node, node)], pos=nx.random_layout(G, random_state=9),
+                nx.draw_networkx_edges(G, edgelist=[(cur_node, node)], pos=nx.random_layout(G, seed=9),
                        width=3, edge_color="#ffd43d", ax=ax);
                 ax.set_title('Step {}'.format(plot_n))
                 plot_n += 1
@@ -294,10 +294,10 @@ def dijkstra(G, u, v, return_path_directions=True, show_plots=True):
         if show_plots:
             ax = fig.add_subplot(5,6,plot_n)
             #Base Plot
-            nx.draw(G, pos=nx.random_layout(G, random_state=9), with_labels=True, node_color="#1cf0c7",
+            nx.draw(G, pos=nx.random_layout(G, seed=9), with_labels=True, node_color="#1cf0c7",
                     node_size=500, font_weight="bold", width=2, alpha=.8, ax=ax)
             #Recolor paths to visited nodeds
-            nx.draw_networkx_edges(G, edgelist=visited_edges, pos=nx.random_layout(G, random_state=9),
+            nx.draw_networkx_edges(G, edgelist=visited_edges, pos=nx.random_layout(G, seed=9),
                        width=3, edge_color="#00b3e6", ax=ax);
             ax.set_title('Step {}'.format(plot_n))
             plot_n += 1
