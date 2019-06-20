@@ -31,7 +31,7 @@ To start, here's the network from the previous lesson:
 ```python
 G = nx.navigable_small_world_graph(3, seed=3)
 G = nx.relabel_nodes(G, dict(zip(G.nodes, ["A", "B", "C", "D", "E", "F", "G", "H", "I"])))
-nx.draw(G, pos=nx.random_layout(G, random_state=9), with_labels=True, node_color="#1cf0c7",
+nx.draw(G, pos=nx.random_layout(G, seed=9), with_labels=True, node_color="#1cf0c7",
         node_size=500, font_weight="bold", width=2, alpha=.8)
 ```
 
