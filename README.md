@@ -1,4 +1,3 @@
-
 # Graph Theory: Simple and Shortest Paths - Lab
 
 ## Introduction
@@ -46,10 +45,6 @@ nx.draw(G, pos=nx.random_layout(G, seed=9), with_labels=True, node_color='#1cf0c
 ```
 
 
-![png](index_files/index_4_0.png)
-
-
-
 ```python
 # __SOLUTION__ 
 G = nx.navigable_small_world_graph(3, seed=3)
@@ -59,7 +54,9 @@ nx.draw(G, pos=nx.random_layout(G, seed=9), with_labels=True, node_color='#1cf0c
 ```
 
 
+    
 ![png](index_files/index_5_0.png)
+    
 
 
 ## Dijkstra's Algorithm
@@ -268,7 +265,7 @@ print(dijkstra(G, 'I', 'A'), nx.dijkstra_path(G, 'I', 'A'), nx.dijkstra_path_len
     
     
     
-    (['I', 'G', 'B', 'A'], 3) ['I', 'G', 'C', 'A'] 3
+    (['I', 'G', 'C', 'A'], 3) ['I', 'G', 'C', 'A'] 3
 
 
 ## Level-Up: Creating a Visual
@@ -301,10 +298,6 @@ def dijkstra(G, u, v, return_path_directions=True, show_plots=True):
 ```python
 dijkstra(G, 'F', 'G')
 ```
-
-
-![png](index_files/index_22_0.png)
-
 
 
 ```python
@@ -377,7 +370,7 @@ def dijkstra(G, u, v, return_path_directions=True, show_plots=True):
             pass
         # Update the plot for the visited node
         if show_plots:
-            ax = fig.add_subplot(5,6,plot_n)
+            ax = fig.add_subplot(5,6,plot_n-1)
             # Base Plot
             nx.draw(G, pos=nx.random_layout(G, seed=9), with_labels=True, node_color='#1cf0c7',
                     node_size=500, font_weight='bold', width=2, alpha=.8, ax=ax)
@@ -403,7 +396,16 @@ dijkstra(G, 'F', 'G')
 ```
 
 
-![png](index_files/index_24_0.png)
+
+
+    (['F', 'I', 'G'], 2)
+
+
+
+
+    
+![png](index_files/index_24_1.png)
+    
 
 
 ## Summary 
