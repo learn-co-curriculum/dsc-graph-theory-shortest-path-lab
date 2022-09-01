@@ -1,4 +1,3 @@
-
 # Graph Theory: Simple and Shortest Paths - Lab
 
 ## Introduction
@@ -35,10 +34,6 @@ G = nx.relabel_nodes(G, dict(zip(G.nodes, ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H
 nx.draw(G, pos=nx.random_layout(G, seed=9), with_labels=True, node_color='#1cf0c7',
         node_size=500, font_weight='bold', width=2, alpha=0.8)
 ```
-
-
-![png](index_files/index_3_0.png)
-
 
 ## Dijkstra's Algorithm
 
@@ -150,10 +145,6 @@ def dijkstra(G, u, v, return_path_directions=True, show_plots=True):
 ```python
 dijkstra(G, 'F', 'G')
 ```
-
-
-![png](index_files/index_15_0.png)
-
 
 ## Summary 
 
