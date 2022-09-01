@@ -266,7 +266,7 @@ def dijkstra(G, u, v, return_path_directions=True, show_plots=True):
             # Future update: Add weight update for weighted graphs
             # Create a new graph of the neighbor being explored
             if show_plots:
-                ax = fig.add_subplot(5,6,plot_n)
+                ax = fig.add_subplot(5,6,plot_n-1)
                 # Base Plot
                 nx.draw(G, pos=nx.random_layout(G, seed=9), with_labels=True, node_color='#1cf0c7',
                         node_size=500, font_weight='bold', width=2, alpha=.8, ax=ax)
